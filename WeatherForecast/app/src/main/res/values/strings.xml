@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherForecast</string>
+    <string name="city_input">what city you want to know</string>
+    <string name="find_button">find</string>
 </resources>
