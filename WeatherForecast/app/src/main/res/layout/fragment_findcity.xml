@@ -21,5 +21,13 @@
         app:layout_constraintTop_toBottomOf="@+id/input_city"
         android:text="@string/find_button"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cities_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/find_city_button"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
