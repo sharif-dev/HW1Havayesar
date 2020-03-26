@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class FindCity extends Fragment {
     private RecyclerView citiesFragment;
     List<ConvertjsonToCityController> cities;
     private CityAdapter cityAdapter;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -50,7 +52,12 @@ public class FindCity extends Fragment {
             @Override
 
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 cityName = cityFinderEditText.getText().toString();
+                if (cities!=null){
+                    cities.clear();
+                    cityAdapter.notifyDataSetChanged();
+                }
                 url = getString(R.string.url , cityName,getString(R.string.token));
 
                 newRequestQueue(url , getActivity());
@@ -64,6 +71,7 @@ public class FindCity extends Fragment {
         cityFinderEditText = (EditText) view.findViewById(R.id.input_city);
         findButton = (Button) view.findViewById(R.id.find_city_button);
         citiesFragment =  view.findViewById(R.id.cities_fragment);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
     private void newRequestQueue(String url , Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -74,6 +82,9 @@ public class FindCity extends Fragment {
                 CityResponse cityResponse = gson.fromJson(response,CityResponse.class);
                 cities = cityResponse.getCities();
                 initCityList();
+                if (progressBar.isShown()){
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
 
                 cityAdapter.notifyDataSetChanged();
                 Log.d("taag","chooni"+ cities.get(0).getPlaceName());
