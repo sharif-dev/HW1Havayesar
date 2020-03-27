@@ -53,21 +53,76 @@ public class FindCity extends Fragment {
 
             public void onClick(View v) {
                 cityName = cityFinderEditText.getText().toString();
+                if (cities!=null){
 
+                    cities.clear();
+                    cityAdapter.notifyDataSetChanged();
+                    Log.d("Taaag","kkei");
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
                 url = getString(R.string.url , cityName,getString(R.string.token));
-                 new VolleyHandler(url ,citiesFragment,cities,progressBar , getActivity()).execute();
+                newRequestQueue(url);
+
 
             }
         });
 
 
     }
+
     private void findViews(View view){
         cityFinderEditText = (EditText) view.findViewById(R.id.input_city);
         findButton = (Button) view.findViewById(R.id.find_city_button);
         citiesFragment =  view.findViewById(R.id.cities_fragment);
         progressBar = view.findViewById(R.id.progress_bar);
     }
+    private void newRequestQueue(String url) {
+        StringRequest stringRequest;
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                Gson gson = new Gson();
+                CityResponse cityResponse = gson.fromJson(response, CityResponse.class);
+//                if (cityResponse.getCities()!=null) {
 
 
-}
+                cities = cityResponse.getCities();
+                Log.d("Tag", "i am in reques" + cities);
+                initCityList(getActivity());
+                if (progressBar.isShown()) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+
+                cityAdapter.notifyDataSetChanged();
+//                }
+//                else {
+//                    Toast.makeText(context,"invalid city ", Toast.LENGTH_LONG);
+//                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Taagg", "kir to kazemi");
+            }
+
+        });
+
+        queue.add(stringRequest);
+        Log.d("tag", "after queue" + cities);
+
+    }
+    private void initCityList(Context context){
+        cityAdapter = new CityAdapter(cities);
+        citiesFragment.setLayoutManager(new LinearLayoutManager(context));
+        citiesFragment.setAdapter(cityAdapter);
+
+    }
+
+
+    }
