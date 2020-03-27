@@ -1,18 +1,17 @@
 package com.example.weatherforecast;
 
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-
 import java.sql.Time;
 
-
-public class CurrentlyWeather {
+public class DailyWeather {
     private Time time ;
     private String summary;
     private String icon;
     private double humidity;
-    private double temperature;
+    private double lowestTemperature;
+    private double highestTemperature;
+    private Time sunriseTime, sunsetTime;
     private double windSpeed;
+
 
     public double getWindSpeed() {
         return windSpeed;
@@ -22,7 +21,7 @@ public class CurrentlyWeather {
         this.windSpeed = windSpeed;
     }
 
-    public CurrentlyWeather(){
+    public DailyWeather(){
 
     }
 
@@ -58,11 +57,35 @@ public class CurrentlyWeather {
         this.humidity = humidity;
     }
 
-    public double getTemperature() {
-        return temperature;
+    public double getLowestTemperature() {
+        return lowestTemperature;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+    public void setLowestTemperature(double lowestTemperature) {
+        this.lowestTemperature = lowestTemperature;
+    }
+
+    public double getHighestTemperature() {
+        return highestTemperature;
+    }
+
+    public void setHighestTemperature(double highestTemperature) {
+        this.highestTemperature = highestTemperature;
+    }
+
+    public Time getSunriseTime() {
+        return sunriseTime;
+    }
+
+    public void setSunriseTime(Time sunriseTime) {
+        this.sunriseTime = sunriseTime;
+    }
+
+    public Time getSunsetTime() {
+        return sunsetTime;
+    }
+
+    public void setSunsetTime(Time sunsetTime) {
+        this.sunsetTime = sunsetTime;
     }
 }
