@@ -1,6 +1,7 @@
 package com.example.weatherforecast;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class FindCity extends Fragment {
+public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
     private EditText cityFinderEditText;
     private Button findButton;
     private String cityName;
@@ -37,6 +38,15 @@ public class FindCity extends Fragment {
     List<ConvertjsonToCityController> cities;
     private CityAdapter cityAdapter;
     private ProgressBar progressBar;
+    private double x , y;
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
 
     @Nullable
     @Override
@@ -118,11 +128,17 @@ public class FindCity extends Fragment {
 
     }
     private void initCityList(Context context){
-        cityAdapter = new CityAdapter(cities);
+        cityAdapter = new CityAdapter(cities,this);
         citiesFragment.setLayoutManager(new LinearLayoutManager(context));
         citiesFragment.setAdapter(cityAdapter);
 
     }
 
 
+    @Override
+    public void onNoteClick(int position) {
+        x = cities.get(position).getArr()[0];
+        y = cities.get(position).getArr()[1];
+        Log.d("TAg" , "x is" + x);
     }
+}
