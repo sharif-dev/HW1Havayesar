@@ -52,15 +52,10 @@ public class FindCity extends Fragment {
             @Override
 
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
                 cityName = cityFinderEditText.getText().toString();
-                if (cities!=null){
-                    cities.clear();
-                    cityAdapter.notifyDataSetChanged();
-                }
-                url = getString(R.string.url , cityName,getString(R.string.token));
 
-                newRequestQueue(url , getActivity());
+                url = getString(R.string.url , cityName,getString(R.string.token));
+                 new VolleyHandler(url ,citiesFragment,cities,progressBar , getActivity()).execute();
 
             }
         });
@@ -73,40 +68,6 @@ public class FindCity extends Fragment {
         citiesFragment =  view.findViewById(R.id.cities_fragment);
         progressBar = view.findViewById(R.id.progress_bar);
     }
-    private void newRequestQueue(String url , Context context){
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest stringRequest  = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                CityResponse cityResponse = gson.fromJson(response,CityResponse.class);
-                cities = cityResponse.getCities();
-                initCityList();
-                if (progressBar.isShown()){
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
 
-                cityAdapter.notifyDataSetChanged();
-                Log.d("taag","chooni"+ cities.get(0).getPlaceName());
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                    Log.d("Taagg" , "kir to kazemi");
-            }
-
-    });
-        queue.add(stringRequest);
-
-
-    }
-
-    private void initCityList(){
-        cityAdapter = new CityAdapter(cities);
-        citiesFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
-        citiesFragment.setAdapter(cityAdapter);
-
-    }
 
 }
