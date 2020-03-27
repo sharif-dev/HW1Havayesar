@@ -90,7 +90,7 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
     private void newRequestQueue(String url) {
         StringRequest stringRequest;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-
+        System.out.println(url);
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
@@ -99,6 +99,7 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
                 Gson gson = new Gson();
                 CityResponse cityResponse = gson.fromJson(response, CityResponse.class);
 //                if (cityResponse.getCities()!=null) {
+
 
 
                 cities = cityResponse.getCities();
