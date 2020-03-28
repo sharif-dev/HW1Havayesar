@@ -13,6 +13,34 @@ public class CurrentlyWeather {
     private double humidity;
     private double temperature;
     private double windSpeed;
+    private double preCipProbability;
+    private String preCipType;
+    private int uvIndex;
+
+
+    public int getUvIndex() {
+        return uvIndex;
+    }
+
+    public void setUvIndex(int uvIndex) {
+        this.uvIndex = uvIndex;
+    }
+
+    public double getPreCipProbability() {
+        return preCipProbability;
+    }
+
+    public void setPreCipProbability(double preCipProbability) {
+        this.preCipProbability = preCipProbability;
+    }
+
+    public String getPreCipType() {
+        return preCipType;
+    }
+
+    public void setPreCipType(String preCipType) {
+        this.preCipType = preCipType;
+    }
 
     public double getWindSpeed() {
         return windSpeed;
