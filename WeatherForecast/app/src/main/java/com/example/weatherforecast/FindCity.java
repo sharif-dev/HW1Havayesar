@@ -141,5 +141,7 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
         x = cities.get(position).getArr()[0];
         y = cities.get(position).getArr()[1];
         Log.d("TAg" , "x is" + x);
+        Log.d("Tag" , "y is" + y);
+
     }
 }

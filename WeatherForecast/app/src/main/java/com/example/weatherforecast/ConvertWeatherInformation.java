@@ -45,6 +45,7 @@ public class ConvertWeatherInformation {
             public void onResponse(String response) {
                 Gson gson = new Gson();
                 try {
+
                     JSONObject jsonObject = new JSONObject(response);
 
                     timeZone = jsonObject.getString("timezone");
@@ -105,14 +106,14 @@ public class ConvertWeatherInformation {
                     }
                     Log.d("havaye sar",  dailySummary);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Taagg", "naaaaaaaaaaaaaaaaaaaaaaa");
+                Log.d("Taagg", "naaaaaaaaaaaaaaaaaaaaaaa" );
             }
 
         });

@@ -20,7 +20,7 @@ public class ShowWeather extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/5.656,6.343?exclude:currectly,hourly,daily");
+        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/f9d97851d3e40a026e026abd8c68bc1c/35.81667,50.96667");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
