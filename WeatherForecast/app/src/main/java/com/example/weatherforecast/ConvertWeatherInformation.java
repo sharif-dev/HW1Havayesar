@@ -3,11 +3,15 @@ package com.example.weatherforecast;
 import android.util.Log;
 import android.view.View;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -34,8 +38,9 @@ public class ConvertWeatherInformation {
         dailyWeathers = new ArrayList<>();
     }
 
-    public void convert() {
-        StringRequest response = new StringRequest(url, new Response.Listener<String>() {
+    public void convert(FragmentActivity f) {
+        RequestQueue queue = Volley.newRequestQueue(f);
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
@@ -107,12 +112,12 @@ public class ConvertWeatherInformation {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Taagg", "kir to kazemi");
+                Log.d("Taagg", "naaaaaaaaaaaaaaaaaaaaaaa");
             }
 
         });
 
-
+        queue.add(stringRequest);
 
 
     }
