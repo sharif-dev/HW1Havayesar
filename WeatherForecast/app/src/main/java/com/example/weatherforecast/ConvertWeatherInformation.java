@@ -81,6 +81,12 @@ public class ConvertWeatherInformation {
                 currentlyWeather.setTemperature(currently.getDouble("temperature"));
                 currentlyWeather.setTime(new Time(currently.getLong("time")));
                 currentlyWeather.setWindSpeed(currently.getDouble("windSpeed"));
+                currentlyWeather.setUvIndex(currently.getInt("uvIndex"));
+                currentlyWeather.setPreCipProbability(currently.getDouble("precipProbability"));
+                if (currentlyWeather.getPreCipProbability() > 0 && currently.getDouble("precipIntensity")>0){
+                    currentlyWeather.setPreCipType(currently.getString("precipType"));
+                }
+
             }
 
 
@@ -98,7 +104,11 @@ public class ConvertWeatherInformation {
                     tempHour.setTemperature(tempObj.getDouble("temperature"));
                     tempHour.setTime(new Time(tempObj.getLong("time")));
                     tempHour.setWindSpeed(tempObj.getDouble("windSpeed"));
-
+                    tempHour.setUvIndex(tempObj.getInt("uvIndex"));
+                    tempHour.setPreCipProbability(tempObj.getDouble("precipProbability"));
+                    if (tempHour.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity")>0){
+                        tempHour.setPreCipType(tempObj.getString("precipType"));
+                    }
                     hourlyWeathers.add(tempHour);
                 }
             }
@@ -120,7 +130,11 @@ public class ConvertWeatherInformation {
                     tempDay.setTime(new Time(tempObj.getLong("time")));
                     tempDay.setSummary(tempObj.getString("summary"));
                     tempDay.setWindSpeed(tempObj.getDouble("windSpeed"));
-
+                    tempDay.setUvIndex(tempObj.getInt("uvIndex"));
+                    tempDay.setPreCipProbability(tempObj.getDouble("precipProbability"));
+                    if (tempDay.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity")>0){
+                        tempDay.setPreCipType(tempObj.getString("precipType"));
+                    }
 
                     dailyWeathers.add(tempDay);
                 }
