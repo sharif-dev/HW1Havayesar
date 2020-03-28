@@ -13,7 +13,6 @@ import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,102 +36,92 @@ public class ConvertWeatherInformation {
         this.url = url;
         hourlyWeathers = new ArrayList<>();
         dailyWeathers = new ArrayList<>();
-        currentlyWeather = new CurrentlyWeather();
     }
 
+    public void convert(FragmentActivity f) {
+        RequestQueue queue = Volley.newRequestQueue(f);
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                try {
 
-    public void readJson(FragmentActivity fragmentActivity){
-        RequestQueue queue = Volley.newRequestQueue(fragmentActivity);
+                    JSONObject jsonObject = new JSONObject(response);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println(response);
-                        convert(response);
+                    timeZone = jsonObject.getString("timezone");
+                    latitude = jsonObject.getDouble("latitude");
+                    longitude = jsonObject.getDouble("longitude");
+
+
+                    JSONObject currently = jsonObject.getJSONObject("currently");
+                    {
+                        currentlyWeather.setHumidity(currently.getDouble("humidity"));
+                        currentlyWeather.setIcon(currently.getString("icon"));
+                        currentlyWeather.setSummary(currently.getString("summary"));
+                        currentlyWeather.setTemperature(currently.getDouble("temperature"));
+                        currentlyWeather.setTime(new Time(currently.getLong("time")));
+                        currentlyWeather.setWindSpeed(currently.getDouble("windSpeed"));
                     }
-                }, new Response.ErrorListener() {
+
+
+                    JSONObject temp = jsonObject.getJSONObject("hourly");
+                    hourlySummary = temp.getString("summary");
+                    JSONArray hours = temp.getJSONArray("data");
+                    {
+                        for (int i=0 ; i < hours.length() ; i++){
+                            JSONObject tempObj = hours.getJSONObject(i);
+                            CurrentlyWeather tempHour = new CurrentlyWeather();
+                            tempHour.setHumidity(tempObj.getDouble("humidity"));
+                            tempHour.setIcon(tempObj.getString("icon"));
+                            tempHour.setSummary(tempObj.getString("summary"));
+                            tempHour.setTemperature(tempObj.getDouble("temperature"));
+                            tempHour.setTime(new Time(tempObj.getLong("time")));
+                            tempHour.setWindSpeed(tempObj.getDouble("windSpeed"));
+
+                            hourlyWeathers.add(tempHour);
+                        }
+                    }
+
+
+                    temp = jsonObject.getJSONObject("daily");
+                    dailySummary = temp.getString("summary");
+                    JSONArray days = temp.getJSONArray("data");
+                    {
+                        for (int i=0 ; i < days.length() ; i++){
+                            DailyWeather tempDay = new DailyWeather();
+                            JSONObject tempObj = days.getJSONObject(i);
+                            tempDay.setHighestTemperature(tempObj.getDouble("temperatureHigh"));
+                            tempDay.setLowestTemperature(tempObj.getDouble("temperatureLow"));
+                            tempDay.setHumidity(tempObj.getDouble("humidity"));
+                            tempDay.setIcon(tempObj.getString("icon"));
+                            tempDay.setSunriseTime(new Time(tempObj.getLong("sunriseTime")));
+                            tempDay.setSunsetTime(new Time(tempObj.getLong("sunsetTime")));
+                            tempDay.setTime(new Time(tempObj.getLong("time")));
+                            tempDay.setSummary(tempObj.getString("summary"));
+                            tempDay.setWindSpeed(tempObj.getDouble("windSpeed"));
+
+
+                            dailyWeathers.add(tempDay);
+                        }
+                    }
+                    Log.d("havaye sar",  dailySummary);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("afsfaa");
+                Log.d("Taagg", "naaaaaaaaaaaaaaaaaaaaaaa" );
             }
+
         });
 
         queue.add(stringRequest);
+
+
     }
-
-
-
-    public void convert(String jsonFile) {
-
-
-        try {
-            JSONObject jsonObject = new JSONObject(jsonFile);
-            timeZone = jsonObject.getString("timezone");
-            latitude = jsonObject.getDouble("latitude");
-            longitude = jsonObject.getDouble("longitude");
-
-
-            JSONObject currently = jsonObject.getJSONObject("currently");
-            {
-                currentlyWeather.setHumidity(currently.getDouble("humidity"));
-                currentlyWeather.setIcon(currently.getString("icon"));
-                currentlyWeather.setSummary(currently.getString("summary"));
-                currentlyWeather.setTemperature(currently.getDouble("temperature"));
-                currentlyWeather.setTime(new Time(currently.getLong("time")));
-                currentlyWeather.setWindSpeed(currently.getDouble("windSpeed"));
-            }
-
-
-
-            JSONObject temp = jsonObject.getJSONObject("hourly");
-            hourlySummary = temp.getString("summary");
-            JSONArray hours = temp.getJSONArray("data");
-            {
-                for (int i = 0; i < hours.length(); i++) {
-                    JSONObject tempObj = hours.getJSONObject(i);
-                    CurrentlyWeather tempHour = new CurrentlyWeather();
-                    tempHour.setHumidity(tempObj.getDouble("humidity"));
-                    tempHour.setIcon(tempObj.getString("icon"));
-                    tempHour.setSummary(tempObj.getString("summary"));
-                    tempHour.setTemperature(tempObj.getDouble("temperature"));
-                    tempHour.setTime(new Time(tempObj.getLong("time")));
-                    tempHour.setWindSpeed(tempObj.getDouble("windSpeed"));
-
-                    hourlyWeathers.add(tempHour);
-                }
-            }
-
-
-            temp = jsonObject.getJSONObject("daily");
-            dailySummary = temp.getString("summary");
-            JSONArray days = temp.getJSONArray("data");
-            {
-                for (int i = 0; i < days.length(); i++) {
-                    DailyWeather tempDay = new DailyWeather();
-                    JSONObject tempObj = days.getJSONObject(i);
-                    tempDay.setHighestTemperature(tempObj.getDouble("temperatureHigh"));
-                    tempDay.setLowestTemperature(tempObj.getDouble("temperatureLow"));
-                    tempDay.setHumidity(tempObj.getDouble("humidity"));
-                    tempDay.setIcon(tempObj.getString("icon"));
-                    tempDay.setSunriseTime(new Time(tempObj.getLong("sunriseTime")));
-                    tempDay.setSunsetTime(new Time(tempObj.getLong("sunsetTime")));
-                    tempDay.setTime(new Time(tempObj.getLong("time")));
-                    tempDay.setSummary(tempObj.getString("summary"));
-                    tempDay.setWindSpeed(tempObj.getDouble("windSpeed"));
-
-
-                    dailyWeathers.add(tempDay);
-                }
-            }
-            Log.d("havaye sar", dailySummary);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
 }
 
