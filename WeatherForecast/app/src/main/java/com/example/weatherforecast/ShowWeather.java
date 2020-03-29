@@ -22,6 +22,11 @@ public class ShowWeather extends Fragment {
     private RecyclerView showWeatherFrag;
     private ConvertWeatherInformation convertWeatherInformation;
     private double x , y;
+    private boolean flag = true;
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public void setX(double x) {
         this.x = x;
@@ -43,9 +48,22 @@ public class ShowWeather extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+        Log.d("tag" , "zane sina kazemi ro man gaeedam");
 
-        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/"+x+","+y , dailySum ,getActivity(),showWeatherFrag);
-        convertWeatherInformation.readJson(getActivity());
+        convertWeatherInformation = new ConvertWeatherInformation( );
+        if (flag) {
+            convertWeatherInformation.setContext(getActivity());
+            convertWeatherInformation.setUrl("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/" + x + "," + y);
+            convertWeatherInformation.setDailysummary(dailySum);
+            convertWeatherInformation.setWeathersFragment(showWeatherFrag);
+            convertWeatherInformation.readJson(getActivity());
+        }
+        else {
+            convertWeatherInformation.setContext(getActivity());
+            convertWeatherInformation.setDailysummary(dailySum);
+            convertWeatherInformation.setWeathersFragment(showWeatherFrag);
+            convertWeatherInformation.loadOffline(getActivity());
+        }
        // convertWeatherInformation.loadOffline(getActivity());
 
     }

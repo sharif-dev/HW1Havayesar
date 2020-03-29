@@ -43,14 +43,27 @@ public class ConvertWeatherInformation {
    private TextView dailysummary;
     private Context context;
 
-    public ConvertWeatherInformation(String url, TextView dailysummary , Context context , RecyclerView weathersFragment) {
+    public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setWeathersFragment(RecyclerView weathersFragment) {
+        this.weathersFragment = weathersFragment;
+    }
+
+    public void setDailysummary(TextView dailysummary) {
+        this.dailysummary = dailysummary;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public ConvertWeatherInformation() {
         hourlyWeathers = new ArrayList<>();
         dailyWeathers = new ArrayList<>();
         currentlyWeather = new CurrentlyWeather();
-        this.dailysummary = dailysummary;
-        this.context = context;
-        this.weathersFragment = weathersFragment;
+
     }
 
 
