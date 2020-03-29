@@ -14,10 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ShowWeather extends Fragment {
     private ProgressBar progressBar;
     private TextView dailySum;
+    private RecyclerView showWeatherFrag;
     private ConvertWeatherInformation convertWeatherInformation;
     private double x , y;
 
@@ -41,10 +43,10 @@ public class ShowWeather extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        Log.d("Aa","heree");
-        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/"+x+","+y , dailySum);
-//        convertWeatherInformation.readJson(getActivity());
-        convertWeatherInformation.loadOffline(getActivity());
+
+        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/"+x+","+y , dailySum ,getActivity(),showWeatherFrag);
+        convertWeatherInformation.readJson(getActivity());
+       // convertWeatherInformation.loadOffline(getActivity());
 
     }
 
@@ -53,11 +55,15 @@ public class ShowWeather extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_show_weather, container,false);
 
+
     }
 
 
     public void findViews(View view){
+        Log.d("taatat", " i am in find view");
         progressBar = view.findViewById(R.id.progress_bar);
         dailySum = view.findViewById(R.id.daily_summary);
+        showWeatherFrag =(RecyclerView) view.findViewById(R.id.weather_fragment);
+
     }
 }

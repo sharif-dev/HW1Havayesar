@@ -24,7 +24,7 @@ public class ShowWeatherFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState );
 //        tabLayout = (TabLayout) view.findViewById(R.id.tab_layout_changer);
 
     }

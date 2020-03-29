@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,28 +29,36 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 public class ConvertWeatherInformation {
-    public String url;
-    public double latitude;
-    public double longitude;
-    public String timeZone;
-    public CurrentlyWeather currentlyWeather;
-    public ArrayList<CurrentlyWeather> hourlyWeathers;
-    public ArrayList<DailyWeather> dailyWeathers;
+    private String url;
+    private double latitude;
+    private double longitude;
+    private String timeZone;
+    private RecyclerView weathersFragment;
+    private ShowWheaterAdapter showWheaterAdapter;
+    private CurrentlyWeather currentlyWeather;
+    private ArrayList<CurrentlyWeather> hourlyWeathers;
+    private ArrayList<DailyWeather> dailyWeathers;
     private String hourlySummary;
     private String dailySummary;
-    TextView dailysummary;
+   private TextView dailysummary;
+    private Context context;
 
-    public ConvertWeatherInformation(String url , TextView dailysummary) {
+    public ConvertWeatherInformation(String url, TextView dailysummary , Context context , RecyclerView weathersFragment) {
         this.url = url;
         hourlyWeathers = new ArrayList<>();
         dailyWeathers = new ArrayList<>();
         currentlyWeather = new CurrentlyWeather();
         this.dailysummary = dailysummary;
+        this.context = context;
+        this.weathersFragment = weathersFragment;
     }
 
 
-    public void readJson(FragmentActivity fragmentActivity){
+    public void readJson(FragmentActivity fragmentActivity) {
         RequestQueue queue = Volley.newRequestQueue(fragmentActivity);
+        if (weathersFragment == null){
+            Log.d("Tag" , "i am null pointer");
+        }
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -70,7 +80,7 @@ public class ConvertWeatherInformation {
         queue.add(stringRequest);
     }
 
-    public void saveSharedPreferences(FragmentActivity fragmentActivity, String jsonText){
+    public void saveSharedPreferences(FragmentActivity fragmentActivity, String jsonText) {
         SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences("savedJSON", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
@@ -79,13 +89,11 @@ public class ConvertWeatherInformation {
     }
 
 
-    public void loadOffline(FragmentActivity fragmentActivity){
+    public void loadOffline(FragmentActivity fragmentActivity) {
         SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences("savedJSON", Context.MODE_PRIVATE);
         String jsonText = sharedPreferences.getString("jsonText", "");
         convert(jsonText);
     }
-
-
 
 
     public void convert(String jsonFile) {
@@ -108,12 +116,11 @@ public class ConvertWeatherInformation {
                 currentlyWeather.setWindSpeed(currently.getDouble("windSpeed"));
                 currentlyWeather.setUvIndex(currently.getInt("uvIndex"));
                 currentlyWeather.setPreCipProbability(currently.getDouble("precipProbability"));
-                if (currentlyWeather.getPreCipProbability() > 0 && currently.getDouble("precipIntensity")>0){
+                if (currentlyWeather.getPreCipProbability() > 0 && currently.getDouble("precipIntensity") > 0) {
                     currentlyWeather.setPreCipType(currently.getString("precipType"));
                 }
 
             }
-
 
 
             JSONObject temp = jsonObject.getJSONObject("hourly");
@@ -131,7 +138,7 @@ public class ConvertWeatherInformation {
                     tempHour.setWindSpeed(tempObj.getDouble("windSpeed"));
                     tempHour.setUvIndex(tempObj.getInt("uvIndex"));
                     tempHour.setPreCipProbability(tempObj.getDouble("precipProbability"));
-                    if (tempHour.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity")>0){
+                    if (tempHour.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity") > 0) {
                         tempHour.setPreCipType(tempObj.getString("precipType"));
                     }
                     hourlyWeathers.add(tempHour);
@@ -141,7 +148,7 @@ public class ConvertWeatherInformation {
 
             temp = jsonObject.getJSONObject("daily");
             dailySummary = temp.getString("summary");
-            Log.d("saalaam" , dailySummary);
+            Log.d("saalaam", dailySummary);
 
             JSONArray days = temp.getJSONArray("data");
             {
@@ -159,20 +166,27 @@ public class ConvertWeatherInformation {
                     tempDay.setWindSpeed(tempObj.getDouble("windSpeed"));
                     tempDay.setUvIndex(tempObj.getInt("uvIndex"));
                     tempDay.setPreCipProbability(tempObj.getDouble("precipProbability"));
-                    if (tempDay.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity")>0){
+                    if (tempDay.getPreCipProbability() > 0 && tempObj.getDouble("precipIntensity") > 0) {
                         tempDay.setPreCipType(tempObj.getString("precipType"));
                     }
 
                     dailyWeathers.add(tempDay);
                 }
+                initWeatherFragment(context);
+                showWheaterAdapter.notifyDataSetChanged();
             }
             Log.d("havaye sar", dailyWeathers.get(3).getSummary());
-            dailysummary.setText(dailyWeathers.get(1).getSummary());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    private void initWeatherFragment(Context context){
+        Log.d("tag" , "daala");
+        showWheaterAdapter = new ShowWheaterAdapter(dailyWeathers);
+        weathersFragment.setLayoutManager(new LinearLayoutManager(context));
+        weathersFragment.setAdapter(showWheaterAdapter);
 
+    }
 
 
 }
