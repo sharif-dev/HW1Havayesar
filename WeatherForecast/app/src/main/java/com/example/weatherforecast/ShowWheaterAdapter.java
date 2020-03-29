@@ -30,20 +30,57 @@ public class ShowWheaterAdapter extends RecyclerView.Adapter<ShowWheaterAdapter.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_daily_weather , parent , false );
         return new ViewHolder(view);
     }
+    private void setImage(String url , ViewHolder holder){
+        Log.d("Ttttt" , url);
 
+        if (url.equals("clear-day")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.clearday);
+
+        }
+        if (url.equals("clear-night")){
+            holder.constraintLayout.setBackgroundResource(R.drawable.clearnight);
+
+        }
+        if (url.equals("rain")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.rain);
+
+        }
+        if (url.equals("snow")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.snow);
+
+        }
+        if (url.equals("wind")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.wind);
+
+
+        }
+        if (url.equals("fog")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.fog);
+
+        }
+        if (url.equals("cloudy")) {
+            Log.d("taat", "haramama");
+            holder.constraintLayout.setBackgroundResource(R.drawable.cloudy);
+
+        }
+        if (url.equals("partly-cloudy-day")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.partlycloudyday);
+
+        }
+        if (url.equals("partly-cloudy-night")) {
+            holder.constraintLayout.setBackgroundResource(R.drawable.partycloudynight);
+
+        }
+
+    }
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("ttaqq" , weathers.get(2).getSummary());
         holder.summary.setText(weathers.get(position).getSummary());
         holder.highestTemp.setText("highest temperture is" + String.valueOf(weathers.get(position).getHighestTemperature()) + "\nLowenst temperture is "+String.valueOf(weathers.get(position).getLowestTemperature()));
         holder.icon.setText(weathers.get(position).getIcon());
-        String url =  weathers.get(position).getIcon().replaceAll("-" ,"" );
-//        int u = Integer.parseInt(weathers.get(position).getIcon().replaceAll("-" ,"" ))
-        Log.d("ttt" , url);
-//        holder.constraintLayout.setBackground(Drawable.createFromPath( url+".jpeg"));
-        Uri otherPath = Uri.parse("android.resource://com.e.test/drawable/icon");
-        holder.constraintLayout.setBackground(Drawable.createFromPath("/home/alireza/Desktop/HW1Havayesar/WeatherForecast/app/src/main/res/drawable-v24/"+url+".jpeg"));
+        String url =  weathers.get(position).getIcon();
+        setImage(url , holder);
 
 
     }
