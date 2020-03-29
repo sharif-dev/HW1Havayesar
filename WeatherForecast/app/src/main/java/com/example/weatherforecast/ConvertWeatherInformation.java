@@ -1,5 +1,7 @@
 package com.example.weatherforecast;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -52,8 +54,11 @@ public class ConvertWeatherInformation {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println(response);
+//                        System.out.println(response);
+                        saveSharedPreferences(fragmentActivity, response);
                         convert(response);
+//                        loadOffline(fragmentActivity);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -65,11 +70,27 @@ public class ConvertWeatherInformation {
         queue.add(stringRequest);
     }
 
+    public void saveSharedPreferences(FragmentActivity fragmentActivity, String jsonText){
+        SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences("savedJSON", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putString("jsonText", jsonText);
+        editor.commit();
+    }
+
+
+    public void loadOffline(FragmentActivity fragmentActivity){
+        SharedPreferences sharedPreferences = fragmentActivity.getSharedPreferences("savedJSON", Context.MODE_PRIVATE);
+        String jsonText = sharedPreferences.getString("jsonText", "");
+        convert(jsonText);
+    }
+
+
 
 
     public void convert(String jsonFile) {
 
-
+        System.out.println(jsonFile);
         try {
             JSONObject jsonObject = new JSONObject(jsonFile);
             timeZone = jsonObject.getString("timezone");

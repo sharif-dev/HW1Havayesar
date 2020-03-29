@@ -1,5 +1,7 @@
 package com.example.weatherforecast;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +43,8 @@ public class ShowWeather extends Fragment {
         findViews(view);
         Log.d("Aa","heree");
         convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/"+x+","+y , dailySum);
-        convertWeatherInformation.readJson(getActivity());
+//        convertWeatherInformation.readJson(getActivity());
+        convertWeatherInformation.loadOffline(getActivity());
 
     }
 
