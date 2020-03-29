@@ -1,11 +1,13 @@
 package com.example.weatherforecast;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,20 +15,33 @@ import androidx.fragment.app.Fragment;
 
 public class ShowWeather extends Fragment {
     private ProgressBar progressBar;
-    private Button button;
+    private TextView dailySum;
     private ConvertWeatherInformation convertWeatherInformation;
+    private double x , y;
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/37.8267,-122.4233");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                convertWeatherInformation.readJson(getActivity());
-            }
-        });
+        Log.d("Aa","heree");
+        convertWeatherInformation = new ConvertWeatherInformation("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/"+x+","+y , dailySum);
+
 
     }
 
@@ -39,7 +54,7 @@ public class ShowWeather extends Fragment {
 
 
     public void findViews(View view){
-        button = (Button) view.findViewById(R.id.find_city_button);
         progressBar = view.findViewById(R.id.progress_bar);
+        dailySum = view.findViewById(R.id.daily_summary);
     }
 }

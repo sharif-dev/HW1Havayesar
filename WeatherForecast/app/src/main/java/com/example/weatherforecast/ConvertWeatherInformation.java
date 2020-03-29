@@ -2,6 +2,7 @@ package com.example.weatherforecast;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -18,6 +19,7 @@ import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -32,12 +34,14 @@ public class ConvertWeatherInformation {
     public ArrayList<DailyWeather> dailyWeathers;
     private String hourlySummary;
     private String dailySummary;
+    TextView dailysummary;
 
-    public ConvertWeatherInformation(String url) {
+    public ConvertWeatherInformation(String url , TextView dailysummary) {
         this.url = url;
         hourlyWeathers = new ArrayList<>();
         dailyWeathers = new ArrayList<>();
         currentlyWeather = new CurrentlyWeather();
+        this.dailysummary = dailysummary;
     }
 
 
@@ -139,8 +143,8 @@ public class ConvertWeatherInformation {
                     dailyWeathers.add(tempDay);
                 }
             }
-            Log.d("havaye sar", dailySummary);
-
+            Log.d("havaye sar", dailyWeathers.get(3).getSummary());
+            dailysummary.setText(dailySummary);
         } catch (Exception e) {
             e.printStackTrace();
         }

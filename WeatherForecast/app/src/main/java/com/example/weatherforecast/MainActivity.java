@@ -3,6 +3,7 @@ package com.example.weatherforecast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,11 +12,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        FindCity findCity = new FindCity();
-        ShowWeather showWeather = new ShowWeather();
+        Log.d("aa","aa");
 //        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,findCity)
-//                .addToBackStack(null).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,showWeather)
-                .addToBackStack(null).commit();
-    }
+        FindCity findCity = new FindCity();
+        Log.d("eee" , "jooo");
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,findCity).addToBackStack(null).commit();    }
 }

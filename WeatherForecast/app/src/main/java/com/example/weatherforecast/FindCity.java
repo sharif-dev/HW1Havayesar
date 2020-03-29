@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -142,6 +143,13 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
         y = cities.get(position).getArr()[1];
         Log.d("TAg" , "x is" + x);
         Log.d("Tag" , "y is" + y);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ShowWeather showWeather = new ShowWeather();
+        showWeather.setX(x);
+        showWeather.setY(y);
+        ft.replace(R.id.fragment_container , showWeather);
+        ft.addToBackStack(null);
+        ft.commit();
 
     }
 }
