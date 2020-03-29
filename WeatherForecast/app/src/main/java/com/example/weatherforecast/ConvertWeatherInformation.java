@@ -120,6 +120,8 @@ public class ConvertWeatherInformation {
 
             temp = jsonObject.getJSONObject("daily");
             dailySummary = temp.getString("summary");
+            Log.d("saalaam" , dailySummary);
+
             JSONArray days = temp.getJSONArray("data");
             {
                 for (int i = 0; i < days.length(); i++) {
@@ -144,7 +146,7 @@ public class ConvertWeatherInformation {
                 }
             }
             Log.d("havaye sar", dailyWeathers.get(3).getSummary());
-            dailysummary.setText(dailySummary);
+            dailysummary.setText(dailyWeathers.get(1).getSummary());
         } catch (Exception e) {
             e.printStackTrace();
         }
