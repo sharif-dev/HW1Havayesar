@@ -1,5 +1,6 @@
 package com.example.weatherforecast;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,17 @@ public class ShowWheaterAdapter extends RecyclerView.Adapter<ShowWheaterAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("ttaqq" , weathers.get(2).getSummary());
         holder.summary.setText(weathers.get(position).getSummary());
+        holder.highestTemp.setText("highest temperture is" + String.valueOf(weathers.get(position).getHighestTemperature()) + "\nLowenst temperture is "+String.valueOf(weathers.get(position).getLowestTemperature()));
+        holder.icon.setText(weathers.get(position).getIcon());
+
+
+
+
     }
 
     @Override
@@ -38,10 +46,14 @@ public class ShowWheaterAdapter extends RecyclerView.Adapter<ShowWheaterAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView summary;
+        public TextView highestTemp;
+        public TextView icon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             summary = itemView.findViewById(R.id.day_weather);
+            highestTemp = itemView.findViewById(R.id.lowes_highest_temperture);
+            icon=itemView.findViewById(R.id.icon);
         }
     }
 }
