@@ -73,7 +73,7 @@ public class ConvertWeatherInformation {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("afsfaa");
+                System.out.println(error.getCause().getCause().getMessage());
             }
         });
 

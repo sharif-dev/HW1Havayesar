@@ -5,6 +5,7 @@
     android:layout_margin="5dp"
     android:layout_height="wrap_content">
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/container_of_recycle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/clear">
