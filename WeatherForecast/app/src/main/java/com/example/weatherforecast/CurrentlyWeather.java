@@ -7,7 +7,7 @@ import java.sql.Time;
 
 
 public class CurrentlyWeather {
-    private Time time ;
+    private long time ;
     private String summary;
     private String icon;
     private double humidity;
@@ -54,11 +54,11 @@ public class CurrentlyWeather {
 
     }
 
-    public Time getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

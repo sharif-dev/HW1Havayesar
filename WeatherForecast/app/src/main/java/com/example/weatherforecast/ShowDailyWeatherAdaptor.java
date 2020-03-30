@@ -1,6 +1,7 @@
 package com.example.weatherforecast;
 
 import android.annotation.SuppressLint;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeatherAdaptor.ViewHolder> {
     private List<DailyWeather> weathers;
+    private String timeZone;
 
-    public ShowDailyWeatherAdaptor(List<DailyWeather> weathers) {
+    public ShowDailyWeatherAdaptor(List<DailyWeather> weathers, String timeZone) {
         this.weathers = weathers;
+        this.timeZone = timeZone;
     }
 
     @NonNull
@@ -75,8 +83,12 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.summary.setText(weathers.get(position).getTime() + "\n\n\n\n\n" + weathers.get(position).getSummary());
-        holder.highestTemp.setText("highest temperature is\n " + String.valueOf((int)weathers.get(position).getHighestTemperature()) + "\nLowest temperature is \n"+String.valueOf((int)weathers.get(position).getLowestTemperature()));
+        Date date = new Date(weathers.get(position).getTime() * 1000);
+        DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd  \n EEEE");
+        formatter.setTimeZone(TimeZone.getTimeZone(this.timeZone));
+        String dateFormatted = formatter.format(date);
+        holder.summary.setText(dateFormatted + "\n\n\n\n\n" + weathers.get(position).getSummary());
+        holder.highestTemp.setText("humidity: " + (int)(weathers.get(position).getHumidity() * 100) + "%\n\nhighest temperature is\n " + String.valueOf((int)weathers.get(position).getHighestTemperature()) + " ℃\nLowest temperature is \n"+String.valueOf((int)weathers.get(position).getLowestTemperature()) + " ℃");
         holder.icon.setText(weathers.get(position).getIcon());
         String url =  weathers.get(position).getIcon();
         setImage(url , holder);

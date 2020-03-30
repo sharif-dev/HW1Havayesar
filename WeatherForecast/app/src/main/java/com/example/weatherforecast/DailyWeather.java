@@ -3,13 +3,13 @@ package com.example.weatherforecast;
 import java.sql.Time;
 
 public class DailyWeather {
-    private Time time ;
+    private long time ;
     private String summary;
     private String icon;
     private double humidity;
     private double lowestTemperature;
     private double highestTemperature;
-    private Time sunriseTime, sunsetTime;
+    private long sunriseTime, sunsetTime;
     private double windSpeed;
     private double preCipProbability;
     private String preCipType;
@@ -53,13 +53,7 @@ public class DailyWeather {
 
     }
 
-    public Time getTime() {
-        return time;
-    }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
 
     public String getSummary() {
         return summary;
@@ -101,19 +95,27 @@ public class DailyWeather {
         this.highestTemperature =( highestTemperature - 32) * 5 / 9;
     }
 
-    public Time getSunriseTime() {
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public long getSunriseTime() {
         return sunriseTime;
     }
 
-    public void setSunriseTime(Time sunriseTime) {
+    public long getTime() {
+        return time;
+    }
+
+    public void setSunriseTime(long sunriseTime) {
         this.sunriseTime = sunriseTime;
     }
 
-    public Time getSunsetTime() {
+    public long getSunsetTime() {
         return sunsetTime;
     }
 
-    public void setSunsetTime(Time sunsetTime) {
+    public void setSunsetTime(long sunsetTime) {
         this.sunsetTime = sunsetTime;
     }
 }

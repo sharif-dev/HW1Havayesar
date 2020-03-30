@@ -119,7 +119,7 @@ public class ConvertWeatherInformation {
                 currentlyWeather.setIcon(currently.getString("icon"));
                 currentlyWeather.setSummary(currently.getString("summary"));
                 currentlyWeather.setTemperature(currently.getDouble("temperature"));
-                currentlyWeather.setTime(new Time(currently.getLong("time")));
+                currentlyWeather.setTime(currently.getLong("time"));
                 currentlyWeather.setWindSpeed(currently.getDouble("windSpeed"));
                 currentlyWeather.setUvIndex(currently.getInt("uvIndex"));
                 currentlyWeather.setPreCipProbability(currently.getDouble("precipProbability"));
@@ -141,7 +141,7 @@ public class ConvertWeatherInformation {
                     tempHour.setIcon(tempObj.getString("icon"));
                     tempHour.setSummary(tempObj.getString("summary"));
                     tempHour.setTemperature(tempObj.getDouble("temperature"));
-                    tempHour.setTime(new Time(tempObj.getLong("time")));
+                    tempHour.setTime(tempObj.getLong("time"));
                     tempHour.setWindSpeed(tempObj.getDouble("windSpeed"));
                     tempHour.setUvIndex(tempObj.getInt("uvIndex"));
                     tempHour.setPreCipProbability(tempObj.getDouble("precipProbability"));
@@ -166,9 +166,9 @@ public class ConvertWeatherInformation {
                     tempDay.setLowestTemperature(tempObj.getDouble("temperatureLow"));
                     tempDay.setHumidity(tempObj.getDouble("humidity"));
                     tempDay.setIcon(tempObj.getString("icon"));
-                    tempDay.setSunriseTime(new Time(tempObj.getLong("sunriseTime")));
-                    tempDay.setSunsetTime(new Time(tempObj.getLong("sunsetTime")));
-                    tempDay.setTime(new Time(tempObj.getLong("time")));
+                    tempDay.setSunriseTime(tempObj.getLong("sunriseTime"));
+                    tempDay.setSunsetTime(tempObj.getLong("sunsetTime"));
+                    tempDay.setTime(tempObj.getLong("time"));
                     tempDay.setSummary(tempObj.getString("summary"));
                     tempDay.setWindSpeed(tempObj.getDouble("windSpeed"));
                     tempDay.setUvIndex(tempObj.getInt("uvIndex"));
@@ -189,7 +189,7 @@ public class ConvertWeatherInformation {
     }
     private void initWeatherFragment(Context context){
         Log.d("tag" , "daala");
-        showDailyWeatherAdaptor = new ShowDailyWeatherAdaptor(dailyWeathers);
+        showDailyWeatherAdaptor = new ShowDailyWeatherAdaptor(dailyWeathers, timeZone);
         weathersFragment.setLayoutManager(new LinearLayoutManager(context));
         weathersFragment.setAdapter(showDailyWeatherAdaptor);
 
