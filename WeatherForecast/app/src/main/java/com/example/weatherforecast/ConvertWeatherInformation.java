@@ -3,7 +3,6 @@ package com.example.weatherforecast;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
@@ -14,16 +13,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -34,7 +28,7 @@ public class ConvertWeatherInformation {
     private double longitude;
     private String timeZone;
     private RecyclerView weathersFragment;
-    private ShowWheaterAdapter showWheaterAdapter;
+    private ShowDailyWeatherAdaptor showDailyWeatherAdaptor;
     private CurrentlyWeather currentlyWeather;
     private ArrayList<CurrentlyWeather> hourlyWeathers;
     private ArrayList<DailyWeather> dailyWeathers;
@@ -186,7 +180,7 @@ public class ConvertWeatherInformation {
                     dailyWeathers.add(tempDay);
                 }
                 initWeatherFragment(context);
-                showWheaterAdapter.notifyDataSetChanged();
+                showDailyWeatherAdaptor.notifyDataSetChanged();
             }
             Log.d("havaye sar", dailyWeathers.get(3).getSummary());
         } catch (Exception e) {
@@ -195,9 +189,9 @@ public class ConvertWeatherInformation {
     }
     private void initWeatherFragment(Context context){
         Log.d("tag" , "daala");
-        showWheaterAdapter = new ShowWheaterAdapter(dailyWeathers);
+        showDailyWeatherAdaptor = new ShowDailyWeatherAdaptor(dailyWeathers);
         weathersFragment.setLayoutManager(new LinearLayoutManager(context));
-        weathersFragment.setAdapter(showWheaterAdapter);
+        weathersFragment.setAdapter(showDailyWeatherAdaptor);
 
     }
 

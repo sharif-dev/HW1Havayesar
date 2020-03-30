@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"
         android:hint="@string/city_input"/>
+
     <Button
         android:id="@+id/find_city_button"
         android:layout_width="0dp"
