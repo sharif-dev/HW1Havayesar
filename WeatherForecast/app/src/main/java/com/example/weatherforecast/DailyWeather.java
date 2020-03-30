@@ -90,7 +90,7 @@ public class DailyWeather {
     }
 
     public void setLowestTemperature(double lowestTemperature) {
-        this.lowestTemperature = lowestTemperature;
+        this.lowestTemperature = (lowestTemperature - 32) * 5 / 9;
     }
 
     public double getHighestTemperature() {
@@ -98,7 +98,7 @@ public class DailyWeather {
     }
 
     public void setHighestTemperature(double highestTemperature) {
-        this.highestTemperature = highestTemperature;
+        this.highestTemperature =( highestTemperature - 32) * 5 / 9;
     }
 
     public Time getSunriseTime() {

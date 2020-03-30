@@ -91,6 +91,6 @@ public class CurrentlyWeather {
     }
 
     public void setTemperature(double temperature) {
-        this.temperature = temperature;
+        this.temperature = (temperature - 32) * 5 / 9;
     }
 }

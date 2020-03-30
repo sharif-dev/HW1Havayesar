@@ -29,6 +29,8 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     private void setImage(String url , ViewHolder holder){
         Log.d("Ttttt" , url);
 
+
+
         if (url.equals("clear-day")) {
             holder.constraintLayout.setBackgroundResource(R.drawable.clearday);
 
@@ -41,6 +43,7 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
             holder.constraintLayout.setBackgroundResource(R.drawable.rain);
 
         }
+
         if (url.equals("snow")) {
             holder.constraintLayout.setBackgroundResource(R.drawable.snow);
 
@@ -72,8 +75,8 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.summary.setText(weathers.get(position).getSummary());
-        holder.highestTemp.setText("highest temperture is" + String.valueOf(weathers.get(position).getHighestTemperature()) + "\nLowenst temperture is "+String.valueOf(weathers.get(position).getLowestTemperature()));
+        holder.summary.setText(weathers.get(position).getTime() + "\n\n\n\n\n" + weathers.get(position).getSummary());
+        holder.highestTemp.setText("highest temperature is\n " + String.valueOf((int)weathers.get(position).getHighestTemperature()) + "\nLowest temperature is \n"+String.valueOf((int)weathers.get(position).getLowestTemperature()));
         holder.icon.setText(weathers.get(position).getIcon());
         String url =  weathers.get(position).getIcon();
         setImage(url , holder);
