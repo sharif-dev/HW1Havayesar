@@ -19,11 +19,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeatherAdaptor.ViewHolder> {
-    private List<DailyWeather> weathers;
+public class HourlyWeatherAdaptor extends RecyclerView.Adapter<HourlyWeatherAdaptor.ViewHolder> {
+    private List<CurrentlyWeather> weathers;
     private String timeZone;
 
-    public ShowDailyWeatherAdaptor(List<DailyWeather> weathers, String timeZone) {
+    public HourlyWeatherAdaptor(List<CurrentlyWeather> weathers, String timeZone) {
         this.weathers = weathers;
         this.timeZone = timeZone;
     }
@@ -84,11 +84,11 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Date date = new Date(weathers.get(position).getTime() * 1000);
-        DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd  \n EEEE");
+        DateFormat formatter = new SimpleDateFormat("EEEE \n HH");
         formatter.setTimeZone(TimeZone.getTimeZone(this.timeZone));
         String dateFormatted = formatter.format(date);
         holder.summary.setText(dateFormatted + "\n\n\n\n\n" + weathers.get(position).getSummary());
-        holder.highestTemp.setText("humidity: " + (int)(weathers.get(position).getHumidity() * 100) + "%\n\nhighest temperature:\n " + String.valueOf((int)weathers.get(position).getHighestTemperature()) + " ℃\nLowest temperature is \n"+String.valueOf((int)weathers.get(position).getLowestTemperature()) + " ℃");
+        holder.highestTemp.setText("\n\ntemperature is\n " + String.valueOf((int)weathers.get(position).getTemperature()) + " ℃\n\n\n" + "humidity: " + (int)(weathers.get(position).getHumidity() * 100) + "%");
         holder.icon.setText(weathers.get(position).getIcon());
         String url =  weathers.get(position).getIcon();
         setImage(url , holder);

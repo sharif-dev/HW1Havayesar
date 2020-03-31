@@ -19,11 +19,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeatherAdaptor.ViewHolder> {
-    private List<DailyWeather> weathers;
+public class CurrentWeatherAdaptor extends RecyclerView.Adapter<CurrentWeatherAdaptor.ViewHolder> {
+    private List<CurrentlyWeather> weathers;
     private String timeZone;
 
-    public ShowDailyWeatherAdaptor(List<DailyWeather> weathers, String timeZone) {
+    public CurrentWeatherAdaptor(List<CurrentlyWeather> weathers, String timeZone) {
         this.weathers = weathers;
         this.timeZone = timeZone;
     }
@@ -31,7 +31,7 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_daily_weather , parent , false );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_current_weather , parent , false );
         return new ViewHolder(view);
     }
     private void setImage(String url , ViewHolder holder){
@@ -84,12 +84,12 @@ public class ShowDailyWeatherAdaptor extends RecyclerView.Adapter<ShowDailyWeath
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Date date = new Date(weathers.get(position).getTime() * 1000);
-        DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd  \n EEEE");
+        DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd \n EEEE \n HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone(this.timeZone));
         String dateFormatted = formatter.format(date);
-        holder.summary.setText(dateFormatted + "\n\n\n\n\n" + weathers.get(position).getSummary());
-        holder.highestTemp.setText("humidity: " + (int)(weathers.get(position).getHumidity() * 100) + "%\n\nhighest temperature:\n " + String.valueOf((int)weathers.get(position).getHighestTemperature()) + " ℃\nLowest temperature is \n"+String.valueOf((int)weathers.get(position).getLowestTemperature()) + " ℃");
-        holder.icon.setText(weathers.get(position).getIcon());
+        holder.summary.setText(dateFormatted + "\n\n" + weathers.get(position).getSummary() + "\n\n wind speed: " + weathers.get(position).getWindSpeed());
+        holder.highestTemp.setText("temperature is\n " + String.valueOf((int)weathers.get(position).getTemperature()) + " ℃\n\n" + "humidity: " + (int)(weathers.get(position).getHumidity() * 100) + "%\n\n UVIndex: " + weathers.get(position).getUvIndex());
+        holder.icon.setText(weathers.get(position).getIcon() + "\n\n\n\n" + weathers.get(position).getSummary());
         String url =  weathers.get(position).getIcon();
         setImage(url , holder);
 

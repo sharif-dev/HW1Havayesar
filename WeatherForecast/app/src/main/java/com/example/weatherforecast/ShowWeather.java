@@ -20,6 +20,9 @@ public class ShowWeather extends Fragment {
     private ProgressBar progressBar;
     private TextView dailySum;
     private RecyclerView showWeatherFrag;
+    private Button daily;
+    private Button hourly;
+    private Button current;
     private ConvertWeatherInformation convertWeatherInformation;
     private double x , y;
     private boolean flag = true;
@@ -44,19 +47,57 @@ public class ShowWeather extends Fragment {
         return y;
     }
 
+
+    public void startProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void endProgressBar(){
+        if (progressBar.isShown())
+            progressBar.setVisibility(View.INVISIBLE);
+    }
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+
+        convertWeatherInformation = new ConvertWeatherInformation();
+        convertWeatherInformation.setFunc(this::endProgressBar);
+
+        hourly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertWeatherInformation.startHourlyWeather();
+            }
+        });
+
+        daily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertWeatherInformation.startDailyWeather();
+            }
+        });
+
+        current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertWeatherInformation.startCurrentWeather();
+            }
+        });
+
+
         Log.d("tag" , "zane sina kazemi ro man gaeedam");
 
-        convertWeatherInformation = new ConvertWeatherInformation( );
+
         if (flag) {
             convertWeatherInformation.setContext(getActivity());
             convertWeatherInformation.setUrl("https://api.darksky.net/forecast/8b8f535b152b8369106181d94adf2f24/" + x + "," + y);
             convertWeatherInformation.setDailysummary(dailySum);
             convertWeatherInformation.setWeathersFragment(showWeatherFrag);
             convertWeatherInformation.readJson(getActivity());
+
         }
         else {
             convertWeatherInformation.setContext(getActivity());
@@ -65,6 +106,7 @@ public class ShowWeather extends Fragment {
             convertWeatherInformation.loadOffline(getActivity());
         }
        // convertWeatherInformation.loadOffline(getActivity());
+//        endProgressBar();
 
     }
 
@@ -79,9 +121,12 @@ public class ShowWeather extends Fragment {
 
     public void findViews(View view){
         Log.d("taatat", " i am in find view");
-        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar = view.findViewById(R.id.loading);
         dailySum = view.findViewById(R.id.daily_summary);
         showWeatherFrag =(RecyclerView) view.findViewById(R.id.weather_fragment);
+        hourly = view.findViewById(R.id.hourlyweatherbutton);
+        daily = view.findViewById(R.id.dailyweatherbutton);
+        current = view.findViewById(R.id.currenweatherbutton);
 
     }
 }

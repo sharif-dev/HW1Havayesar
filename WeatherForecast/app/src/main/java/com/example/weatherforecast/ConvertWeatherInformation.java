@@ -29,13 +29,16 @@ public class ConvertWeatherInformation {
     private String timeZone;
     private RecyclerView weathersFragment;
     private ShowDailyWeatherAdaptor showDailyWeatherAdaptor;
-    private CurrentlyWeather currentlyWeather;
+    private HourlyWeatherAdaptor hourlyWeatherAdaptor;
+    private CurrentWeatherAdaptor currentWeatherAdaptor;
+    private ArrayList<CurrentlyWeather> currentlyWeathers;
     private ArrayList<CurrentlyWeather> hourlyWeathers;
     private ArrayList<DailyWeather> dailyWeathers;
     private String hourlySummary;
     private String dailySummary;
    private TextView dailysummary;
     private Context context;
+    private Runnable func;
 
     public void setUrl(String url) {
         this.url = url;
@@ -56,8 +59,12 @@ public class ConvertWeatherInformation {
     public ConvertWeatherInformation() {
         hourlyWeathers = new ArrayList<>();
         dailyWeathers = new ArrayList<>();
-        currentlyWeather = new CurrentlyWeather();
+        currentlyWeathers = new ArrayList<>();
 
+    }
+
+    public void setFunc(Runnable func){
+        this.func = func;
     }
 
 
@@ -112,7 +119,7 @@ public class ConvertWeatherInformation {
             latitude = jsonObject.getDouble("latitude");
             longitude = jsonObject.getDouble("longitude");
 
-
+            CurrentlyWeather currentlyWeather = new CurrentlyWeather();
             JSONObject currently = jsonObject.getJSONObject("currently");
             {
                 currentlyWeather.setHumidity(currently.getDouble("humidity"));
@@ -127,6 +134,7 @@ public class ConvertWeatherInformation {
                     currentlyWeather.setPreCipType(currently.getString("precipType"));
                 }
 
+                this.currentlyWeathers.add(currentlyWeather);
             }
 
 
@@ -180,7 +188,8 @@ public class ConvertWeatherInformation {
                     dailyWeathers.add(tempDay);
                 }
                 initWeatherFragment(context);
-                showDailyWeatherAdaptor.notifyDataSetChanged();
+                currentWeatherAdaptor.notifyDataSetChanged();
+                func.run();
             }
             Log.d("havaye sar", dailyWeathers.get(3).getSummary());
         } catch (Exception e) {
@@ -189,10 +198,27 @@ public class ConvertWeatherInformation {
     }
     private void initWeatherFragment(Context context){
         Log.d("tag" , "daala");
+        currentWeatherAdaptor = new CurrentWeatherAdaptor(currentlyWeathers, timeZone);
+        hourlyWeatherAdaptor = new HourlyWeatherAdaptor(hourlyWeathers, timeZone);
         showDailyWeatherAdaptor = new ShowDailyWeatherAdaptor(dailyWeathers, timeZone);
         weathersFragment.setLayoutManager(new LinearLayoutManager(context));
-        weathersFragment.setAdapter(showDailyWeatherAdaptor);
+        weathersFragment.setAdapter(currentWeatherAdaptor);
 
+    }
+
+    public void startDailyWeather(){
+        weathersFragment.setAdapter(showDailyWeatherAdaptor);
+        showDailyWeatherAdaptor.notifyDataSetChanged();
+    }
+
+    public void startHourlyWeather(){
+        weathersFragment.setAdapter(hourlyWeatherAdaptor);
+        hourlyWeatherAdaptor.notifyDataSetChanged();
+    }
+
+    public void startCurrentWeather(){
+        weathersFragment.setAdapter(currentWeatherAdaptor);
+        currentWeatherAdaptor.notifyDataSetChanged();
     }
 
 

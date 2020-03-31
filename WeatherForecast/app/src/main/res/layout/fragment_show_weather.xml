@@ -27,12 +27,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="1dp">
 
         <Button
             android:id="@+id/currenweatherbutton"
@@ -41,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/cardview_dark_background"
-            android:textColor="@color/cardview_light_background"
-            android:text="current weather" />
+            android:text="current weather"
+            android:textColor="@color/cardview_light_background" />
 
         <Button
             android:id="@+id/hourlyweatherbutton"
@@ -51,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/cardview_dark_background"
-            android:textColor="@color/cardview_light_background"
-            android:text="hourly weather" />
+            android:text="hourly weather"
+            android:textColor="@color/cardview_light_background" />
 
         <Button
             android:id="@+id/dailyweatherbutton"
@@ -60,11 +61,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:soundEffectsEnabled="false"
             android:background="@color/cardview_dark_background"
-            android:textColor="@color/cardview_light_background"
-            android:text="daily weather" />
+            android:soundEffectsEnabled="false"
+            android:text="daily weather"
+            android:textColor="@color/cardview_light_background" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/weather_fragment"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
     <!--    <ProgressBar-->
     <!--        android:id="@+id/progress_bar"-->
