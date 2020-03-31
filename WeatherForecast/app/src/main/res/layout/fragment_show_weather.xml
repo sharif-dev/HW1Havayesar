@@ -41,9 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardview_dark_background"
+            android:background="#09DBF6"
             android:text="current weather"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/hourlyweatherbutton"
@@ -51,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardview_dark_background"
+            android:background="@android:color/black"
             android:text="hourly weather"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="#09DBF6" />
 
         <Button
             android:id="@+id/dailyweatherbutton"
@@ -61,10 +61,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardview_dark_background"
+            android:background="@android:color/black"
             android:soundEffectsEnabled="false"
             android:text="daily weather"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="#09DBF6" />
     </LinearLayout>
 
     <ProgressBar

@@ -151,5 +151,6 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
         ft.addToBackStack(null);
         ft.commit();
 
+
     }
 }
