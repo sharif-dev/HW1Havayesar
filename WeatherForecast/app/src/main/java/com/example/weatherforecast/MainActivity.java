@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("eee" , "jooo");
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,findCity).addToBackStack(null).commit(); }
         else {
+            Toast.makeText(this , "No internet available" , Toast.LENGTH_LONG).show();
 
             ShowWeather showWeather = new ShowWeather();
             showWeather.setFlag(false);

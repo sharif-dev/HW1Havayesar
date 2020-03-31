@@ -88,7 +88,6 @@ public class ShowWeather extends Fragment {
         });
 
 
-        Log.d("tag" , "zane sina kazemi ro man gaeedam");
 
 
         if (flag) {
@@ -104,6 +103,7 @@ public class ShowWeather extends Fragment {
             convertWeatherInformation.setDailysummary(dailySum);
             convertWeatherInformation.setWeathersFragment(showWeatherFrag);
             convertWeatherInformation.loadOffline(getActivity());
+            progressBar.setVisibility(View.INVISIBLE);
         }
        // convertWeatherInformation.loadOffline(getActivity());
 //        endProgressBar();
