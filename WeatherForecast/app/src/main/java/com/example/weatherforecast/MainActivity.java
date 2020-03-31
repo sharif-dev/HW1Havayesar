@@ -16,11 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        ConnectivityManager cm =(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        if (isConnected){
+        Log.d("taag" ,"hello"+ ConnectivityHelper.isConnectedToNetwork(this));
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
 
         FindCity findCity = new FindCity();
         Log.d("eee" , "jooo");
@@ -32,5 +29,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container , showWeather).addToBackStack(null).commit();
 
         }
+
     }
 }
