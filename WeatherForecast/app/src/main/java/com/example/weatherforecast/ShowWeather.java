@@ -1,7 +1,10 @@
 package com.example.weatherforecast;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -70,13 +74,31 @@ public class ShowWeather extends Fragment {
             @Override
             public void onClick(View v) {
                 convertWeatherInformation.startHourlyWeather();
+
+                daily.setTextColor(Color.parseColor("#09DBF6"));
+                hourly.setTextColor(Color.BLACK);
+                current.setTextColor(Color.parseColor("#09DBF6"));
+
+                daily.setBackgroundColor(Color.BLACK);
+                hourly.setBackgroundColor(Color.parseColor("#09DBF6"));
+                current.setBackgroundColor(Color.BLACK);
             }
         });
 
         daily.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
                 convertWeatherInformation.startDailyWeather();
+
+                daily.setTextColor(Color.BLACK);
+                hourly.setTextColor(Color.parseColor("#09DBF6"));
+                current.setTextColor(Color.parseColor("#09DBF6"));
+
+                daily.setBackgroundColor(Color.parseColor("#09DBF6"));
+                hourly.setBackgroundColor(Color.BLACK);
+                current.setBackgroundColor(Color.BLACK);
+
             }
         });
 
@@ -84,6 +106,14 @@ public class ShowWeather extends Fragment {
             @Override
             public void onClick(View v) {
                 convertWeatherInformation.startCurrentWeather();
+
+                daily.setTextColor(Color.parseColor("#09DBF6"));
+                hourly.setTextColor(Color.parseColor("#09DBF6"));
+                current.setTextColor(Color.BLACK);
+
+                daily.setBackgroundColor(Color.BLACK);
+                hourly.setBackgroundColor(Color.BLACK);
+                current.setBackgroundColor(Color.parseColor("#09DBF6"));
             }
         });
 
