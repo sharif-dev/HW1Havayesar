@@ -120,7 +120,7 @@ public class FindCity extends Fragment implements CityAdapter.OnNoteListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Taagg", "kir to kazemi");
+                Log.d("Taagg", "dorod to kazemi");
             }
 
         });
